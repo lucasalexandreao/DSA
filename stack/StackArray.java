@@ -1,4 +1,4 @@
-package stack.stack_array;
+package stack;
 
 import utils.CustomException;
 
