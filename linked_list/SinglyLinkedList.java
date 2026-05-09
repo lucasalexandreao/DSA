@@ -2,26 +2,26 @@ package linked_list;
 
 import utils.CustomException;
 
-public class SinglyLinkedList {
+public class SinglyLinkedList<T> {
 
-  private static class Node {
-    int key;
-    Node next;
+  private static class Node<T> {
+    T value;
+    Node<T> next;
 
-    public Node(int key) {
-      this.key = key;
+    public Node(T value) {
+      this.value = value;
       this.next = null;
     }
 
-    public Node(int key, Node next) {
-      this.key = key;
+    public Node(T value, Node<T> next) {
+      this.value = value;
       this.next = next;
     }
   }
 
   private int size;
-  private Node head;
-  private Node tail;
+  private Node<T> head;
+  private Node<T> tail;
 
   public SinglyLinkedList(){
     this.size = 0;
@@ -29,15 +29,17 @@ public class SinglyLinkedList {
     this.tail = null;
   }
 
-  public SinglyLinkedList(int key) {
-    Node node = new Node(key);
+  public SinglyLinkedList(T value) {
+    Node<T> node = new Node<>(value);
     this.head = node;
     this.tail = node;
     this.size = 1;
   }
 
-  public void add(int key) {
-    Node newNode = new Node(key);
+  public void add(T value) throws CustomException {
+    if (value == null) throw new CustomException("ERROR: value is null.");
+    
+    Node<T> newNode = new Node<>(value);
 
     if (isEmpty()) {
       head = newNode;
@@ -49,23 +51,23 @@ public class SinglyLinkedList {
     size++;
   }
 
-  public void remove(int key) throws CustomException {
+  public void remove(T value) throws CustomException {
     if (isEmpty()) throw new CustomException("ERROR: List is empty!");
     
-    if (head.key == key) {
-      Node node = head;
+    if (head.value.equals(value)) {
+      Node<T> node = head;
       head = node.next;
       node.next = null;
       if (head == null) tail = null;
     } else {
-      Node predecessor = head;
-      while(predecessor.next != null && predecessor.next.key != key) {
+      Node<T> predecessor = head;
+      while(predecessor.next != null && !predecessor.next.value.equals(value)) {
         predecessor = predecessor.next;
       }
   
       if (predecessor.next == null) throw new CustomException(("ERROR: Node not found."));
   
-      Node node = predecessor.next;
+      Node<T> node = predecessor.next;
       predecessor.next = node.next;
       if (predecessor.next == null) tail = predecessor;
       node.next = null;
