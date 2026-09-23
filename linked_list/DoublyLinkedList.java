@@ -95,4 +95,8 @@ public class DoublyLinkedList<T> {
   public boolean isEmpty() {
     return size == 0;
   }
+
+  public int getSize() {
+    return size;
+  }
 }
