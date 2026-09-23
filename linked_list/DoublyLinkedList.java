@@ -55,6 +55,24 @@ public class DoublyLinkedList<T> {
         size++;
     }
 
+    public void addFirst(T value) throws CustomException {
+        if (value == null) {
+            throw new CustomException("ERROR: value is null.");
+        }
+
+        Node<T> newNode = new Node<>(value);
+        if (isEmpty()) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode.next = head;
+            head.previous = newNode;
+            head = newNode;
+        }
+
+        size++;
+    }
+
     public void remove(T value) throws CustomException {
         if (isEmpty()) {
             throw new CustomException("ERROR: List is empty");
@@ -96,6 +114,26 @@ public class DoublyLinkedList<T> {
         }
 
         size--;
+    }
+
+    public T removeFirst() throws CustomException {
+        if (isEmpty()) {
+            throw new CustomException("ERROR: List is empty");
+        }
+
+        Node<T> node = head;
+        head = node.next;
+
+        if (head == null) {
+            tail = null;
+        } else {
+            head.previous = null;
+            node.next = null;
+        }
+
+        size--;
+
+        return node.value;
     }
 
     public boolean isEmpty() {
