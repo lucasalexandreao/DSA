@@ -104,4 +104,20 @@ public class SinglyLinkedList<T> {
     return size == 0;
   }
 
+  public int getSize() {
+    return size;
+  }
+
+  public T headValue() throws CustomException {
+    if (isEmpty()) throw new CustomException("ERROR: List is empty!");
+
+    return head.value;
+  }
+
+  public T tailValue() throws CustomException {
+    if (isEmpty()) throw new CustomException("ERROR: List is empty!");
+
+    return tail.value;
+  }
+
 }
