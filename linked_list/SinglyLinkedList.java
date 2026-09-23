@@ -53,6 +53,24 @@ public class SinglyLinkedList<T> {
         size++;
     }
 
+    public void addFirst(T value) throws CustomException {
+        if (value == null) {
+            throw new CustomException("ERROR: value is null.");
+        }
+
+        Node<T> newNode = new Node<>(value);
+
+        if (isEmpty()) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode.next = head;
+            head = newNode;
+        }
+
+        size++;
+    }
+
     public void remove(T value) throws CustomException {
         if (isEmpty()) {
             throw new CustomException("ERROR: List is empty!");
@@ -110,6 +128,25 @@ public class SinglyLinkedList<T> {
         size--;
 
         return value;
+    }
+
+    public T removeFirst() throws CustomException {
+        if (isEmpty()) {
+            throw new CustomException("ERROR: List is empty!");
+        }
+
+        Node<T> node = head;
+        head = node.next;
+
+        if (head == null) {
+            tail = null;
+        } else {
+            node.next = null;
+        }
+
+        size--;
+
+        return node.value;
     }
 
     public boolean isEmpty() {
