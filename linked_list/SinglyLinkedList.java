@@ -76,6 +76,30 @@ public class SinglyLinkedList<T> {
     size--;
   }
 
+  public T removeLast() throws CustomException {
+    if (isEmpty()) throw new CustomException("ERROR: List is empty!");
+
+    T value = tail.value;
+
+    if (head.next == null) {
+      head = null;
+      tail = null;
+    } else {
+      Node<T> predecessor = head;
+
+      while (predecessor.next.next != null) { 
+        predecessor = predecessor.next;
+      }
+
+      predecessor.next = null;
+      tail = predecessor;
+    }
+
+    size--;
+
+    return value;
+  }
+
   public boolean isEmpty() {
     return size == 0;
   }
