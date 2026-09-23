@@ -4,120 +4,136 @@ import utils.CustomException;
 
 public class SinglyLinkedList<T> {
 
-  private static class Node<T> {
-    T value;
-    Node<T> next;
+    private static class Node<T> {
+        T value;
+        Node<T> next;
 
-    public Node(T value) {
-      this.value = value;
-      this.next = null;
+        public Node(T value) {
+            this.value = value;
+            this.next = null;
+        }
+
+        public Node(T value, Node<T> next) {
+            this.value = value;
+            this.next = next;
+        }
     }
 
-    public Node(T value, Node<T> next) {
-      this.value = value;
-      this.next = next;
-    }
-  }
+    private int size;
+    private Node<T> head;
+    private Node<T> tail;
 
-  private int size;
-  private Node<T> head;
-  private Node<T> tail;
-
-  public SinglyLinkedList(){
-    this.size = 0;
-    this.head = null;
-    this.tail = null;
-  }
-
-  public SinglyLinkedList(T value) {
-    Node<T> node = new Node<>(value);
-    this.head = node;
-    this.tail = node;
-    this.size = 1;
-  }
-
-  public void add(T value) throws CustomException {
-    if (value == null) throw new CustomException("ERROR: value is null.");
-    
-    Node<T> newNode = new Node<>(value);
-
-    if (isEmpty()) {
-      head = newNode;
-    } else {
-      tail.next = newNode;
+    public SinglyLinkedList() {
+        this.size = 0;
+        this.head = null;
+        this.tail = null;
     }
 
-    tail = newNode;
-    size++;
-  }
-
-  public void remove(T value) throws CustomException {
-    if (isEmpty()) throw new CustomException("ERROR: List is empty!");
-    
-    if (head.value.equals(value)) {
-      Node<T> node = head;
-      head = node.next;
-      node.next = null;
-      if (head == null) tail = null;
-    } else {
-      Node<T> predecessor = head;
-      while(predecessor.next != null && !predecessor.next.value.equals(value)) {
-        predecessor = predecessor.next;
-      }
-  
-      if (predecessor.next == null) throw new CustomException(("ERROR: Node not found."));
-  
-      Node<T> node = predecessor.next;
-      predecessor.next = node.next;
-      if (predecessor.next == null) tail = predecessor;
-      node.next = null;
+    public SinglyLinkedList(T value) {
+        Node<T> node = new Node<>(value);
+        this.head = node;
+        this.tail = node;
+        this.size = 1;
     }
 
-    size--;
-  }
+    public void add(T value) throws CustomException {
+        if (value == null) {
+            throw new CustomException("ERROR: value is null.");
+        }
 
-  public T removeLast() throws CustomException {
-    if (isEmpty()) throw new CustomException("ERROR: List is empty!");
+        Node<T> newNode = new Node<>(value);
 
-    T value = tail.value;
+        if (isEmpty()) {
+            head = newNode;
+        } else {
+            tail.next = newNode;
+        }
 
-    if (head.next == null) {
-      head = null;
-      tail = null;
-    } else {
-      Node<T> predecessor = head;
-
-      while (predecessor.next.next != null) { 
-        predecessor = predecessor.next;
-      }
-
-      predecessor.next = null;
-      tail = predecessor;
+        tail = newNode;
+        size++;
     }
 
-    size--;
+    public void remove(T value) throws CustomException {
+        if (isEmpty()) {
+            throw new CustomException("ERROR: List is empty!");
+        }
 
-    return value;
-  }
+        if (head.value.equals(value)) {
+            Node<T> node = head;
+            head = node.next;
+            node.next = null;
+            if (head == null) {
+                tail = null;
+            }
+        } else {
+            Node<T> predecessor = head;
+            while (predecessor.next != null && !predecessor.next.value.equals(value)) {
+                predecessor = predecessor.next;
+            }
 
-  public boolean isEmpty() {
-    return size == 0;
-  }
+            if (predecessor.next == null) {
+                throw new CustomException(("ERROR: Node not found."));
+            }
 
-  public int getSize() {
-    return size;
-  }
+            Node<T> node = predecessor.next;
+            predecessor.next = node.next;
+            if (predecessor.next == null) {
+                tail = predecessor;
+            }
+            node.next = null;
+        }
 
-  public T headValue() throws CustomException {
-    if (isEmpty()) throw new CustomException("ERROR: List is empty!");
+        size--;
+    }
 
-    return head.value;
-  }
+    public T removeLast() throws CustomException {
+        if (isEmpty()) {
+            throw new CustomException("ERROR: List is empty!");
+        }
 
-  public T tailValue() throws CustomException {
-    if (isEmpty()) throw new CustomException("ERROR: List is empty!");
+        T value = tail.value;
 
-    return tail.value;
-  }
+        if (head.next == null) {
+            head = null;
+            tail = null;
+        } else {
+            Node<T> predecessor = head;
+
+            while (predecessor.next.next != null) {
+                predecessor = predecessor.next;
+            }
+
+            predecessor.next = null;
+            tail = predecessor;
+        }
+
+        size--;
+
+        return value;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public T headValue() throws CustomException {
+        if (isEmpty()) {
+            throw new CustomException("ERROR: List is empty!");
+        }
+
+        return head.value;
+    }
+
+    public T tailValue() throws CustomException {
+        if (isEmpty()) {
+            throw new CustomException("ERROR: List is empty!");
+        }
+
+        return tail.value;
+    }
 
 }
