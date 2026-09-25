@@ -136,6 +136,26 @@ public class DoublyLinkedList<T> {
         return node.value;
     }
 
+    public T removeLast() throws CustomException {
+        if (isEmpty()) {
+            throw new CustomException("ERROR: List is empty");
+        }
+
+        Node<T> node = tail;
+        tail = node.previous;
+
+        if (tail == null) {
+            head = null;
+        } else {
+            tail.next = null;
+            node.previous = null;
+        }
+
+        size--;
+
+        return node.value;
+    }
+
     public boolean isEmpty() {
         return size == 0;
     }
