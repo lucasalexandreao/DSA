@@ -34,7 +34,7 @@ public class QueueList<T> {
         return elements.headValue();
     }
 
-    public int size() {
+    public int getSize() {
         return elements.getSize();
     }
 
